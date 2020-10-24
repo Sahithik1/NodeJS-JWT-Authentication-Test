@@ -25,15 +25,21 @@ app.use((req,res, next) => {
 let users = [
     {
         id: 1,
-        username: 'Sahithi',
+        username: 'Priya',
         password: '123'
     },
 
     {
         id: 2,
-        username: 'Ramya',
+        username: 'fabio',
         password: '456'
+    },
+    {
+        id: 3,
+        username: 'Supriya',
+        password: '1234'
     }
+
 ];
 
 app.post('/api/login', (req, res) => {
@@ -64,14 +70,14 @@ app.post('/api/login', (req, res) => {
 app.get('/api/dashboard', jwtMW, (req, res) => {
     res.json({
         success: true,
-        myContent: 'Secret content that only logged in people can see!!!!'
+        myContent: 'Secret content that only logged in people can see'
     });
 });
 
 app.get('/api/settings', jwtMW, (req, res) => {
     res.json({
         success: true,
-        myContent: 'Setting page only the person with valid token can see this page !!!'
+        myContent: 'Only login person with valid token can see this page'
     });
 });
 
@@ -82,11 +88,11 @@ app.get('/', (req, res) => {
 app.use(function (err, req, res, next) {
 
   if(err.name === 'UnauthorizedError') {
-    if(err.inner.name == 'TokenExpiredError') {
-        console.log(err.inner.name);
-        axios.get('http://localhost:3000');
-        return;
-      }
+    // if(err.inner.name == 'TokenExpiredError') {
+    //     console.log(err.inner.name);
+    //     axios.get('http://localhost:3000');
+    //     return;
+    //   }
       res.status(401).json({
               success: false,
               officialError: err,
